@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:left="@dimen/padding_common">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorDivison" />
+            <solid android:color="@color/colorDivision" />
             <size android:height="@dimen/division_line"/>
         </shape>
     </item>
@@ -10,9 +10,9 @@
 <!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--android:shape="line"-->
     <!--android:thickness="1dp"-->
-    <!--android:tint="@color/colorDivison">-->
+    <!--android:tint="@color/colorDivision">-->
 
-    <!--<stroke android:color="@color/colorDivison"/>-->
+    <!--<stroke android:color="@color/colorDivision"/>-->
     <!--<size android:height="0.5dp"/>-->
 
 <!--</shape>-->

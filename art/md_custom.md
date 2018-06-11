@@ -8,6 +8,14 @@ app设计师发挥创意设计的好素材。 也是需要我们巧妙植入到�
 
 ![](png_ptr_meituan.png) ![](png_ptr_elema.png) ![](png_ptr_tianmao.png)
 
+## 成功案例
+
+[仿美团下拉刷新](https://www.jianshu.com/p/95225cbcf86b)  
+[YanXuanRefresh](https://github.com/ChaserSheng/YanXuanRefresh)  
+[SmartRefreshLottie](https://github.com/wapchief/SmartRefreshLottie)  
+[一个Android下拉刷新样式](http://www.jianshu.com/p/8f29c97eefd8)  
+[838514984](https://github.com/838514984/smartrefreshlayout-statusUtils)
+
 
 ## 安卓下拉刷新框架
 SmartRefreshLayout被设计为一个刷新框架，具有非常高的自定性和可扩展性，可以应付
@@ -16,7 +24,7 @@ SmartRefreshLayout被设计为一个刷新框架，具有非常高的自定性�
 通过SmartRefreshLayout框架，你可以在一个稳定强大的下拉布局中实现自己项目需求的
 Header ，不用去关心滑动事件处理，不用关心子控件的回弹和滚动边界，只需关注自己真
 正的项目需求Header的样子和动画。
- 
+
 ### 体系结构
 在学习使用框架的自定义功能之前，我们还是有必要来了解一下框架的体系和结构：
 
@@ -24,7 +32,7 @@ Header ，不用去关心滑动事件处理，不用关心子控件的回弹和�
  - **RefreshHeader** 下拉头部的事件处理和显示接口
  - **RefreshFooter** 上拉底部的事件处理和显示接口
  - **RefreshContent** 对不同内容的统一封装，包括判断是否可滚动、回弹判断、智能识别
- 
+
 下面是UML关系类图
 
 ![](jpg_uml.jpg)
@@ -45,7 +53,7 @@ SmartRefreshLayout 的Header和Footer都有多种变换方式，适应不同风�
 
 **FixedBehind 固定在后面** 和 **Scale 拉伸形变**
 
-![](gif_practive_feedlist.gif) ![](gif_Circle.gif)
+![](gif_practive_feedlist.gif) ![](gif_BezierCircle.gif)
 
 **Screen 全屏幕** 和 **Translate 平行移动**
 
@@ -85,17 +93,17 @@ public interface RefreshHeader {
      * 尺寸定义初始化完成 （如果高度不改变（代码修改：setHeader），只调用一次, 在RefreshLayout#onMeasure中调用）
      * @param kernel RefreshKernel 核心接口（用于完成高级Header功能）
      * @param height HeaderHeight or FooterHeight
-     * @param extendHeight extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onInitialized(RefreshKernel kernel, int height, int extendHeight);
+    void onInitialized(RefreshKernel kernel, int height, int maxDragHeight);
 
     /**
      * 开始动画（开始刷新或者开始加载动画）
      * @param layout RefreshLayout
      * @param height HeaderHeight or FooterHeight
-     * @param extendHeight extendHeaderHeight or extendFooterHeight
+     * @param maxDragHeight 最大拖动高度
      */
-    void onStartAnimator(RefreshLayout layout, int height, int extendHeight);
+    void onStartAnimator(RefreshLayout layout, int height, int maxDragHeight);
 
     /**
      * 动画结束
@@ -104,24 +112,24 @@ public interface RefreshHeader {
      * @return 完成动画所需时间 如果返回 Integer.MAX_VALUE 将取消本次完成事件，继续保持原有状态
      */
     int onFinish(RefreshLayout layout, boolean success);
-    
+
     /**
      * 手指拖动下拉（会连续多次调用，用于实时控制动画关键帧）
-     * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+extendHeight) / headerHeight )
-     * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+extendHeight)
+     * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+maxDragHeight) / headerHeight )
+     * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+maxDragHeight)
      * @param headerHeight Header的高度
-     * @param extendHeight Header的扩展高度
+     * @param maxDragHeight 最大拖动高度
      */
-    void onPullingDown(float percent, int offset, int headerHeight, int extendHeight);
+    void onPulling(float percent, int offset, int headerHeight, int maxDragHeight);
 
     /**
      * 手指释放之后的持续动画（会连续多次调用，用于实时控制动画关键帧）
-     * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+extendHeight) / headerHeight )
-     * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+extendHeight)
+     * @param percent 下拉的百分比 值 = offset/headerHeight (0 - percent - (headerHeight+maxDragHeight) / headerHeight )
+     * @param offset 下拉的像素偏移量  0 - offset - (headerHeight+maxDragHeight)
      * @param headerHeight Header的高度
-     * @param extendHeight Header的扩展高度
+     * @param maxDragHeight 最大拖动高度
      */
-    void onReleasing(float percent, int offset, int headerHeight, int extendHeight);
+    void onReleasing(float percent, int offset, int headerHeight, int maxDragHeight);
 }
 ~~~
 
@@ -177,7 +185,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
 ~~~java
 public class ClassicsHeader extends LinearLayout implements RefreshHeader {
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int maxDragHeight) {
         mProgressDrawable.start();//开始动画
     }
     @Override
@@ -268,7 +276,7 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
         return SpinnerStyle.Translate;//指定为平移，不能null
     }
     @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
+    public void onStartAnimator(RefreshLayout layout, int headHeight, int maxDragHeight) {
         mProgressDrawable.start();//开始动画
     }
     @Override
@@ -307,19 +315,19 @@ public class ClassicsHeader extends LinearLayout implements RefreshHeader {
         return false;
     }
     @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
+    public void onInitialized(RefreshKernel kernel, int height, int maxDragHeight) {
     }
     @Override
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
     }
     @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+    public void onPulling(float percent, int offset, int headHeight, int maxDragHeight) {
     }
     @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+    public void onReleasing(float percent, int offset, int headHeight, int maxDragHeight) {
     }
     @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
+    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int maxDragHeight) {
     }
     @Override
     public void setPrimaryColors(@ColorInt int ... colors){

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroudDark"
-    tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
+    android:background="@color/colorBackgroundDark"
+    tools:context="com.scwang.refreshlayout.activity.practice.WebViewPracticeActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -15,11 +15,6 @@
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false">
-        <!--<com.scwang.smartrefresh.header.PhoenixHeader-->
-            <!--android:id="@+id/header"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="?attr/actionBarSize"/>-->
         <com.scwang.smartrefresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -34,7 +29,7 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
-        android:id="@+id/blurview"
+        android:id="@+id/blurView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:realtimeBlurRadius="10dp"
@@ -49,6 +44,6 @@
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/title_activity_practice_webview"/>
+        app:title="@string/title_activity_practice_web_view"/>
 
 </FrameLayout>

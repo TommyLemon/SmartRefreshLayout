@@ -9,6 +9,13 @@
         <item name="android:dividerHeight">@dimen/division_line</item>
         <item name="android:listDivider">@drawable/ic_list_divider</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
+    </style>
+
+    <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
+        <item name="llEmptyImage">@drawable/ic_empty</item>
+        <item name="llErrorImage">@drawable/ic_error</item>
+        <item name="llLoadingResId">@layout/common_loading</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">
@@ -37,15 +44,15 @@
     </style>
 
 
-    <style name="AppTheme.Divison">
+    <style name="AppTheme.Division">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/division_line</item>
         <item name="android:dividerHeight">@dimen/division_line</item>
-        <item name="android:divider">@color/colorDivison</item>
-        <item name="android:background">@color/colorDivison</item>
+        <item name="android:divider">@color/colorDivision</item>
+        <item name="android:background">@color/colorDivision</item>
     </style>
 
-    <style name="AppTheme.Divison.Middle">
+    <style name="AppTheme.Division.Middle">
         <item name="android:layout_marginLeft">@dimen/padding_common</item>
         <!--<item name="android:layout_marginStart">@dimen/padding_common</item>-->
     </style>
@@ -128,7 +135,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
         <item name="android:paddingBottom">@dimen/padding_common</item>
-        <item name="android:background">@color/colorBackgroudDark</item>
+        <item name="android:background">@color/colorBackgroundDark</item>
     </style>
 
     <style name="AppTheme.CommonBar.Bar">

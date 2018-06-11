@@ -16,10 +16,11 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srlHeaderMaxDragRate="2.5"
         app:srlPrimaryColor="@android:color/darker_gray"
         app:srlAccentColor="@android:color/white"
-        app:srlEnableLoadmore="false">
+        app:srlEnableLoadMore="false">
         <!--srlHeaderMaxDragRate=2.5时候WaterDropHeader的下拉效果最好-->
         <com.scwang.smartrefresh.header.WaterDropHeader
             android:layout_width="match_parent"
@@ -28,6 +29,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

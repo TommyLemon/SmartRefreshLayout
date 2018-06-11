@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.scwang.refreshlayout.activity.practice.WeiboPracticeActivity">
 
     <ImageView
@@ -32,6 +33,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +49,7 @@
                         android:layout_height="wrap_content"
                         app:titleEnabled="false"
                         app:contentScrim="?attr/colorPrimary"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                         <RelativeLayout
                             android:id="@+id/panel_lyt"
@@ -157,7 +159,7 @@
                                 android:textColor="@android:color/white"
                                 android:text="访客总量 15"/>
 
-                            <View style="@style/AppTheme.Divison"
+                            <View style="@style/AppTheme.Division"
                                 android:layout_alignParentBottom="true"/>
                         </RelativeLayout>
 
@@ -167,11 +169,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@color/colorBackgroudDark"
+                        android:background="@color/colorBackgroundDark"
                         android:paddingBottom="0dp"
                         app:layout_scrollFlags="scroll">
                         <LinearLayout style="@style/AppTheme.CommonBar.Panel"
-                            android:background="@color/colorDivison"
+                            android:background="@color/colorDivision"
                             android:paddingTop="@dimen/division_line"
                             android:paddingBottom="@dimen/division_line">
                             <LinearLayout style="@style/AppTheme.CommonBar.Bar"

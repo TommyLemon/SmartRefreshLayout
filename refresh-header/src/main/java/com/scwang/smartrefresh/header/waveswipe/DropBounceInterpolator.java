@@ -15,8 +15,6 @@ package com.scwang.smartrefresh.header.waveswipe;
  * limitations under the License.
  */
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.animation.Interpolator;
 
 /**
@@ -27,18 +25,10 @@ import android.view.animation.Interpolator;
  */
 public class DropBounceInterpolator implements Interpolator {
 
-    public DropBounceInterpolator() {
-    }
-
-    @SuppressWarnings({"UnusedDeclaration"})
-    public DropBounceInterpolator(Context context, AttributeSet attrs) {
-    }
-
     /**
      * {@inheritDoc}
-     *
-     * @param v
-     * @return
+     * @param v 动画帧
+     * @return 加速值
      */
     @Override
     public float getInterpolation(float v) {

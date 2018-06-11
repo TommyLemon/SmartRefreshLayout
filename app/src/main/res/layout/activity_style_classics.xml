@@ -16,7 +16,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnableLoadmore="true">
+        app:srlEnableLoadMore="true"
+        app:srlEnableAutoLoadMore="false">
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,12 +30,13 @@
             app:srlDrawableArrowSize="20dp"
             app:srlDrawableProgressSize="20dp"
             app:srlDrawableMarginRight="20dp"
-            app:srlDrawableProgress="@drawable/ic_progress_hojder"/>
+            app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
+            android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"

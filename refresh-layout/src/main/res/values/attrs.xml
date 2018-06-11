@@ -33,22 +33,31 @@
         <attr name="srlReboundDuration" format="integer"/>
         <attr name="srlHeaderHeight" format="dimension"/>
         <attr name="srlFooterHeight" format="dimension"/>
+        <attr name="srlHeaderInsetStart" format="dimension"/>
+        <attr name="srlFooterInsetStart" format="dimension"/>
         <attr name="srlDragRate" format="float"/>
         <attr name="srlHeaderMaxDragRate" format="float"/>
         <attr name="srlFooterMaxDragRate" format="float"/>
         <attr name="srlHeaderTriggerRate" format="float"/>
         <attr name="srlFooterTriggerRate" format="float"/>
         <attr name="srlEnableRefresh" format="boolean"/>
-        <attr name="srlEnableLoadmore" format="boolean"/>
+        <attr name="srlEnableLoadMore" format="boolean"/>
         <attr name="srlEnableHeaderTranslationContent" format="boolean"/>
         <attr name="srlEnableFooterTranslationContent" format="boolean"/>
+        <attr name="srlHeaderTranslationViewId" format="reference"/>
+        <attr name="srlFooterTranslationViewId" format="reference"/>
         <attr name="srlEnablePreviewInEditMode" format="boolean"/>
-        <attr name="srlEnableAutoLoadmore" format="boolean"/>
+        <attr name="srlEnableAutoLoadMore" format="boolean"/>
         <attr name="srlEnableOverScrollBounce" format="boolean"/>
         <attr name="srlEnablePureScrollMode" format="boolean"/>
         <attr name="srlEnableNestedScrolling" format="boolean"/>
         <attr name="srlEnableScrollContentWhenLoaded" format="boolean"/>
-        <attr name="srlEnableLoadmoreWhenContentNotFull" format="boolean"/>
+        <attr name="srlEnableScrollContentWhenRefreshed" format="boolean"/>
+        <attr name="srlEnableLoadMoreWhenContentNotFull" format="boolean"/>
+        <attr name="srlEnableFooterFollowWhenLoadFinished" format="boolean"/>
+        <attr name="srlEnableClipHeaderWhenFixedBehind" format="boolean"/>
+        <attr name="srlEnableClipFooterWhenFixedBehind" format="boolean"/>
+        <attr name="srlEnableOverScrollDrag" format="boolean"/>
         <attr name="srlDisableContentWhenRefresh" format="boolean"/>
         <attr name="srlDisableContentWhenLoading" format="boolean"/>
         <attr name="srlFixedHeaderViewId" format="reference"/>
@@ -68,8 +77,8 @@
 
     <declare-styleable name="BallPulseFooter">
         <attr name="srlClassicsSpinnerStyle"/>
-        <attr name="srlPrimaryColor"/>
-        <attr name="srlAccentColor"/>
+        <attr name="srlAnimatingColor" format="color"/>
+        <attr name="srlNormalColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="ClassicsHeader">
@@ -101,6 +110,15 @@
         <attr name="srlDrawableSize"/>
         <attr name="srlDrawableArrowSize"/>
         <attr name="srlDrawableProgressSize"/>
+    </declare-styleable>
+
+    <declare-styleable name="TwoLevelHeader">
+        <attr name="srlMaxRage" format="float"/>
+        <attr name="srlFloorRage" format="float"/>
+        <attr name="srlRefreshRage" format="float"/>
+        <attr name="srlFloorDuration" format="integer"/>
+        <attr name="srlEnableTwoLevel" format="boolean"/>
+        <attr name="srlEnablePullToCloseTwoLevel" format="boolean"/>
     </declare-styleable>
 
 </resources>

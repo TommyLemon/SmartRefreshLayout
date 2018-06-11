@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.scwang.refreshlayout.activity.style.BezierStyleActivity"
+    tools:context="com.scwang.refreshlayout.activity.style.BezierRadarStyleActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
@@ -16,11 +16,13 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srlPrimaryColor="#333"
         app:srlAccentColor="#fff"
-        app:srlEnableLoadmore="false"
+        app:srlEnableLoadMore="false"
         app:srlEnableHeaderTranslationContent="true">
         <com.scwang.smartrefresh.header.StoreHouseHeader
+            android:id="@+id/storeHouseHeader"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             app:shhText="StoreHouse"
@@ -30,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"
+            android:overScrollMode="never"
             tools:listitem="@android:layout/simple_list_item_2"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

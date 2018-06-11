@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scwang.refreshlayout.activity.practice.ProfilePracticeActivity">
+    tools:context="com.scwang.refreshlayout.activity.practice.FeedListPracticeActivity">
 
     <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="@string/title_activity_practice_feedlist"/>
+        app:title="@string/title_activity_practice_feed_list"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -19,7 +19,8 @@
         app:srlAccentColor="#fff"
         app:srlPrimaryColor="#444"
         app:srlFixedHeaderViewId="@+id/profile"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlEnablePreviewInEditMode="false"
+        app:srlEnableLoadMoreWhenContentNotFull="false">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:layout_height="130dp">
 
                 <com.github.mmin18.widget.RealtimeBlurView
-                    android:id="@+id/blurview"
+                    android:id="@+id/blurView"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     app:realtimeBlurRadius="10dp"

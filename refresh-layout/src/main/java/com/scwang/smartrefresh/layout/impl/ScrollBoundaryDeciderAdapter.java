@@ -1,5 +1,6 @@
 package com.scwang.smartrefresh.layout.impl;
 
+import android.graphics.PointF;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -15,17 +16,22 @@ import com.scwang.smartrefresh.layout.util.ScrollBoundaryUtil;
 public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
 
     //<editor-fold desc="Internal">
-    protected MotionEvent mActionEvent;
-    protected ScrollBoundaryDecider boundary;
-    protected boolean mEnableLoadmoreWhenContentNotFull;
+    public PointF mActionEvent;
+    public ScrollBoundaryDecider boundary;
+    public boolean mEnableLoadMoreWhenContentNotFull = true;
 
-    void setScrollBoundaryDecider(ScrollBoundaryDecider boundary){
-        this.boundary = boundary;
-    }
+//    void setScrollBoundaryDecider(ScrollBoundaryDecider boundary){
+//        this.boundary = boundary;
+//    }
 
-    void setActionEvent(MotionEvent event) {
-        mActionEvent = event;
-    }
+//    void setActionEvent(MotionEvent event) {
+//        //event 在没有必要时候会被设置为 null
+//        mActionEvent = event;
+//    }
+//
+//    public void setEnableLoadMoreWhenContentNotFull(boolean enable) {
+//        mEnableLoadMoreWhenContentNotFull = enable;
+//    }
     //</editor-fold>
 
     //<editor-fold desc="ScrollBoundaryDecider">
@@ -34,22 +40,21 @@ public class ScrollBoundaryDeciderAdapter implements ScrollBoundaryDecider {
         if (boundary != null) {
             return boundary.canRefresh(content);
         }
+        //mActionEvent == null 时 canRefresh 不会动态递归搜索
         return ScrollBoundaryUtil.canRefresh(content, mActionEvent);
     }
 
     @Override
-    public boolean canLoadmore(View content) {
+    public boolean canLoadMore(View content) {
         if (boundary != null) {
-            return boundary.canLoadmore(content);
+            return boundary.canLoadMore(content);
         }
-        if (mEnableLoadmoreWhenContentNotFull) {
-            return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
-        }
-        return ScrollBoundaryUtil.canLoadmore(content, mActionEvent);
-    }
-
-    public void setEnableLoadmoreWhenContentNotFull(boolean enable) {
-        mEnableLoadmoreWhenContentNotFull = enable;
+//        if (mEnableLoadMoreWhenContentNotFull) {
+//            //mActionEvent == null 时 canScrollDown 不会动态递归搜索
+//            return !ScrollBoundaryUtil.canScrollDown(content, mActionEvent);
+//        }
+        //mActionEvent == null 时 canLoadMore 不会动态递归搜索
+        return ScrollBoundaryUtil.canLoadMore(content, mActionEvent, mEnableLoadMoreWhenContentNotFull);
     }
     //</editor-fold>
 }

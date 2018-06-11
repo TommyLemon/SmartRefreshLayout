@@ -1,6 +1,6 @@
 # 智能之处
 
-智能是什么玩意？有什么用？
+智能是什么？有什么用？
 
 >智能主要体现 SmartRefreshLayout 对未知布局的自动识别上，这样可以让我们更高效的实现我们所需的功能，也可以实现一些非寻常的功能。
 >下面通过**自定义Header** 和 **嵌套Layout作为内容** 来了解 SmartRefreshLayout 的智能之处。
@@ -71,7 +71,7 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
 
 ## 嵌套Layout作为内容
 
-如果boos要求在列表的前面**固定**一个广告条怎么办？这好办呀，一般我们会开开心心的下下这样的代码：
+如果boss要求在列表的前面**固定**一个广告条怎么办？这好办呀，一般我们会开开心心的下下这样的代码：
 ```xml
 <LinearLayout
     android:orientation="vertical">
@@ -79,7 +79,7 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="我就是boos要求加上的广告条啦"/>
+        android:text="我就是boss要求加上的广告条啦"/>
     <SmartRefreshLayout>
         <ListView/>
     </SmartRefreshLayout>
@@ -88,15 +88,15 @@ compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'//一个开源gif控件
 但是在运行下拉刷新的时候，我们发现 Header是在广告条之下的，看着会别扭~，其实我们可以试试另一种方式，把广告条写到 RefreshLayout内部，看看会发生什么？
 ```xml
 <SmartRefreshLayout>
-	<LinearLayout
-	    android:orientation="vertical">
-	    <TextView
-	        android:layout_width="match_parent"
-	        android:layout_height="100dp"
-	        android:gravity="center"
-	        android:text="我就是boos要求加上的广告条啦"/>
-	    <ListView/>
-	</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="我就是boos要求加上的广告条啦"/>
+        <ListView/>
+    </LinearLayout>
 </SmartRefreshLayout>
 ```
 由于伪代码过于简单，而且运行效果过于丑陋，这里还是贴出在实际项目中的实际情况吧~

@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroudDark"
-    tools:context="com.scwang.refreshlayout.activity.practice.WebviewPracticeActivity">
+    android:background="@color/colorBackgroundDark"
+    tools:context="com.scwang.refreshlayout.activity.practice.WebViewPracticeActivity">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false"
-        app:srlEnableNestedScrolling="false">
+        app:srlEnableNestedScrolling="true">
         <com.scwang.smartrefresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
@@ -28,11 +29,12 @@
             android:clipToPadding="false"
             android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
+            android:overScrollMode="never"
             tools:listitem="@layout/listitem_movie_item"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.github.mmin18.widget.RealtimeBlurView
-        android:id="@+id/blurview"
+        android:id="@+id/blurView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:realtimeBlurRadius="10dp"

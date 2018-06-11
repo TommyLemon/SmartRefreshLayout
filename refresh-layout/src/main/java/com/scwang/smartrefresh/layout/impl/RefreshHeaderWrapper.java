@@ -1,113 +1,70 @@
 package com.scwang.smartrefresh.layout.impl;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
+import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshKernel;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.internal.InternalAbstract;
 
 /**
  * 刷新头部包装
  * Created by SCWANG on 2017/5/26.
  */
+@SuppressLint("ViewConstructor")
+public class RefreshHeaderWrapper extends InternalAbstract implements RefreshHeader/*, InvocationHandler*/ {
 
-public class RefreshHeaderWrapper implements RefreshHeader {
-
-//    private static final String TAG_REFRESH_HEADER_WRAPPER = "TAG_REFRESH_HEADER_WRAPPER";
-
-    private View mWrapperView;
-    private SpinnerStyle mSpinnerStyle;
+//    private RefreshKernel mRefreshKernel;
+//    private Method mRequestDrawBackgroundForFooterMethod;
+//    private Method mRequestRemeasureHeightForFooterMethod;
+//    private Method mRequestNeedTouchEventWhenLoadingMethod;
 
     public RefreshHeaderWrapper(View wrapper) {
-        this.mWrapperView = wrapper;
-//        this.mWrapperView.setTag(TAG_REFRESH_HEADER_WRAPPER.hashCode(), TAG_REFRESH_HEADER_WRAPPER);
+        super(wrapper);
     }
 
-//    public static boolean isTagedHeader(View view) {
-//        return TAG_REFRESH_HEADER_WRAPPER.equals(view.getTag(TAG_REFRESH_HEADER_WRAPPER.hashCode()));
+//    @Override
+//    public void onInitialized(@NonNull RefreshKernel kernel, int height, int maxDragHeight) {
+//        if (mWrapperView instanceof RefreshInternal) {
+//            RefreshKernel proxy = (RefreshKernel) Proxy.newProxyInstance(RefreshKernel.class.getClassLoader(), new Class[]{RefreshKernel.class}, this);
+//            proxy.requestDrawBackgroundForFooter(0);
+//            proxy.requestRemeasureHeightForFooter();
+//            proxy.requestNeedTouchEventWhenLoading(false);
+//            mRefreshKernel = kernel;
+//            ((RefreshInternal) mWrapperView).onInitialized(proxy, height, maxDragHeight);
+//        } else {
+//            ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
+//            if (params instanceof SmartRefreshLayout.LayoutParams) {
+//                kernel.requestDrawBackgroundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
+//            }
+//        }
 //    }
 
-    @NonNull
-    public View getView() {
-        return mWrapperView;
-    }
-
-    @Override
-    public int onFinish(RefreshLayout layout, boolean success) {
-        return 0;
-    }
-
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
-
-    }
-
-    @NonNull
-    @Override
-    public SpinnerStyle getSpinnerStyle() {
-        if (mSpinnerStyle != null) {
-            return mSpinnerStyle;
-        }
-        ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
-        if (params instanceof SmartRefreshLayout.LayoutParams) {
-            mSpinnerStyle = ((SmartRefreshLayout.LayoutParams) params).spinnerStyle;
-            if (mSpinnerStyle != null) {
-                return mSpinnerStyle;
-            }
-        }
-        if (params != null) {
-            if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
-                return mSpinnerStyle = SpinnerStyle.Scale;
-            }
-        }
-        return mSpinnerStyle = SpinnerStyle.Translate;
-    }
-
-    @Override
-    public void onInitialized(RefreshKernel kernel, int height, int extendHeight) {
-        ViewGroup.LayoutParams params = mWrapperView.getLayoutParams();
-        if (params instanceof SmartRefreshLayout.LayoutParams) {
-            kernel.requestDrawBackgoundForHeader(((SmartRefreshLayout.LayoutParams) params).backgroundColor);
-        }
-    }
-
-    @Override
-    public boolean isSupportHorizontalDrag() {
-        return false;
-    }
-
-    @Override
-    public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
-    }
-
-    @Override
-    public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void onRefreshReleased(RefreshLayout layout, int headerHeight, int extendHeight) {
-        
-    }
-
-    @Override
-    public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-
-    }
-
-    @Override
-    public void onStateChanged(RefreshLayout refreshLayout, RefreshState oldState, RefreshState newState) {
-
-    }
+//    @Override
+//    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+//        Object returnValue = null;
+//        if (mRefreshKernel != null) {
+//            if (method.equals(mRequestDrawBackgroundForFooterMethod)) {
+//                mRefreshKernel.requestDrawBackgroundForHeader((int) args[0]);
+//            } else if (method.equals(mRequestRemeasureHeightForFooterMethod)) {
+//                mRefreshKernel.requestRemeasureHeightForHeader();
+//            } else if (method.equals(mRequestNeedTouchEventWhenLoadingMethod)) {
+//                mRefreshKernel.requestNeedTouchEventWhenRefreshing((boolean) args[0]);
+//            } else {
+//                returnValue = method.invoke(mRefreshKernel, args);
+//            }
+//        }
+//        if (method.getReturnType().equals(RefreshKernel.class)) {
+//            if (mRefreshKernel == null && RefreshKernel.class.equals(method.getDeclaringClass())) {
+//                if (mRequestDrawBackgroundForFooterMethod == null) {
+//                    mRequestDrawBackgroundForFooterMethod = method;
+//                } else if (mRequestRemeasureHeightForFooterMethod == null) {
+//                    mRequestRemeasureHeightForFooterMethod = method;
+//                } else if (mRequestNeedTouchEventWhenLoadingMethod == null) {
+//                    mRequestNeedTouchEventWhenLoadingMethod = method;
+//                }
+//            }
+//            return proxy;
+//        }
+//        return returnValue;
+//    }
 }
