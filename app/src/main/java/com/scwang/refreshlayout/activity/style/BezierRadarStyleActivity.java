@@ -19,7 +19,9 @@ import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static android.R.layout.simple_list_item_2;
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
@@ -52,7 +54,7 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_style_bezier);
 
-        mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,8 +62,8 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        mRefreshLayout = (RefreshLayout)findViewById(R.id.refreshLayout);
-        mRefreshHeader = (BezierRadarHeader) findViewById(R.id.header);
+        mRefreshLayout = findViewById(R.id.refreshLayout);
+        mRefreshHeader = findViewById(R.id.header);
         if (isFirstEnter) {
             isFirstEnter = false;
             mRefreshLayout.autoRefresh();//第一次进入触发自动刷新，演示效果
@@ -73,7 +75,10 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,this) {
+            List<Item> items = new ArrayList<>();
+            items.addAll(Arrays.asList(Item.values()));
+            items.addAll(Arrays.asList(Item.values()));
+            recyclerView.setAdapter(new BaseRecyclerAdapter<Item>(items, simple_list_item_2,this) {
                 @Override
                 protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                     holder.text(android.R.id.text1, model.name());
@@ -86,7 +91,7 @@ public class BezierRadarStyleActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (Item.values()[position]) {
+        switch (Item.values()[position % Item.values().length]) {
             case 内容不偏移:
                 mRefreshLayout.setEnableHeaderTranslationContent(false);
                 break;

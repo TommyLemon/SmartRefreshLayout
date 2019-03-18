@@ -23,7 +23,7 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_assign_xml);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,11 +35,11 @@ public class AssignXmlExampleActivity extends AppCompatActivity {
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_example_assign_xml 中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter) {
             isFirstEnter = false;
-            //触发上拉加载
-            refreshLayout.autoLoadMore(250, 250, 1.5f);
+//            //触发上拉加载
+//            mRefreshLayout.autoLoadMore(250, 250, 1.5f);
             //通过多功能监听接口实现 在第一次加载完成之后 自动刷新
             refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
                 @Override

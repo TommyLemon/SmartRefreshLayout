@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 /**
@@ -33,8 +33,8 @@ public class TwoLevelPracticeFragment extends Fragment {
     public void onViewCreated(@NonNull final View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
-        final TwoLevelHeader header = (TwoLevelHeader)root.findViewById(R.id.header);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
+        final TwoLevelHeader header = root.findViewById(R.id.header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +42,7 @@ public class TwoLevelPracticeFragment extends Fragment {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
 
         header.setOnTwoLevelListener(new OnTwoLevelListener() {
             @Override

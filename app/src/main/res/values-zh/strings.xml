@@ -46,6 +46,7 @@
     <string name="title_activity_example_custom">自定义Header</string>
     <string name="title_activity_example_snap_helper">SnapHelper</string>
 
+    <string name="fragment_example_horizontal">水平滚动模式</string>
     <string name="fragment_example_pure_scroll">纯滚动模式</string>
     <string name="fragment_example_pure_scroll_header">纯滚动模式-单独指定Header</string>
     <string name="fragment_example_empty_layout">空页面</string>
@@ -56,6 +57,9 @@
     <string name="fragment_example_viewpager">ViewPager</string>
     <string name="fragment_example_three_level">三级刷新</string>
     <string name="fragment_example_bottom_sheet">Bottom Sheet 对话框</string>
+    <string name="fragment_example_flexbox_layout">Flexbox Layout 管理器</string>
+
+    <string name="fragment_practice_instant">即时通讯</string>
 
     <string name="index_example_basic">基本的使用</string>
     <string name="index_example_style">使用指定的Header和Footer</string>
@@ -69,6 +73,8 @@
     <string name="index_example_pager">ViewPager 多页面共用一个 RefreshLayout</string>
     <string name="index_example_bottom_sheet">BottomSheet内部使用加载更多</string>
     <string name="index_example_level">三级刷新</string>
+    <string name="index_example_flexbox">结合 FlexboxLayoutManager 使用</string>
+    <string name="index_example_horizontal">水平滚动刷新</string>
 
     <string name="index_practice_repast">餐饮美食-简单自定义Header-外边距magin</string>
     <string name="index_practice_profile">个人中心-PureScrollMode-纯滚动模式</string>
@@ -78,6 +84,7 @@
     <string name="index_practice_banner">滚动广告-Banner</string>
     <string name="index_practice_qq_browser">QQ浏览器-模拟QQ浏览器内核提示</string>
     <string name="index_practice_second_floor">二级刷新-仿淘宝二楼</string>
+    <string name="index_practice_instant">即时通讯</string>
 
     <string name="item_style_theme_orange_abstract">更改为橙色主题颜色</string>
     <string name="item_style_theme_red_abstract">更改为红色主题颜色</string>
@@ -154,7 +161,7 @@
         1.设置一次生效一次，需要多处设置，建议特别的页面使用\n
         2.优先级最高，即使使用了会覆盖方法一和方法二的设置\n\n
         使用方法： \n
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);\n
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);\n
         //设置 Header 为 Material风格\n
         refreshLayout.setRefreshHeader(new MaterialHeader(this));\n
         //设置 Footer 为 三球动画\n

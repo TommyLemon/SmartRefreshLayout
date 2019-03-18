@@ -7,18 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -39,7 +39,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_basic);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = (AbsListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
@@ -56,31 +56,29 @@ public class BasicExampleActivity extends AppCompatActivity {
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
-        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //todo SCROLL_STATE_IDLE
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int SCROLL_STATE_IDLE = 0;
+            int SCROLL_STATE_TOUCH_SCROLL = 1;
+            int SCROLL_STATE_FLING = 2;
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
-                View dialogView = View.inflate(BasicExampleActivity.this, R.layout.activity_example_basic, null);
-                dialog.setContentView(dialogView);
-                AbsListView listView = (AbsListView) dialogView.findViewById(R.id.listView);
-                listView.setAdapter(mAdapter);
-                ViewGroup parentGroup = (ViewGroup) listView.getParent();
-                parentGroup.removeView(listView);
-//                ViewGroup parentRoot = (ViewGroup) parentGroup.getParent();
-//                parentRoot.removeView(parentGroup);
-                RecyclerView recyclerView = new RecyclerView(BasicExampleActivity.this);
-                recyclerView.setLayoutManager(new LinearLayoutManager(BasicExampleActivity.this));
-                recyclerView.setAdapter(mAdapter);
-                ((SmartRefreshLayout) parentGroup).setEnableRefresh(false);
-//                ((SmartRefreshLayout) parentGroup).startNestedScroll(0);
-//                ((SmartRefreshLayout) parentGroup).setEnableOverScrollDrag(false);
-                ((SmartRefreshLayout) parentGroup).setRefreshContent(recyclerView);
-//                parentRoot.addView(recyclerView, -1, -1);
-                dialog.show();
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    System.out.println("SCROLL_STATE_IDLE");
+                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
+                } else if (scrollState == SCROLL_STATE_FLING) {
+                    System.out.println("SCROLL_STATE_FLING");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -90,7 +88,7 @@ public class BasicExampleActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshLayout.finishRefresh();
-                        refreshLayout.setNoMoreData(false);
+                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
                     }
                 }, 2000);
             }
@@ -115,7 +113,34 @@ public class BasicExampleActivity extends AppCompatActivity {
 
         //触发自动刷新
         refreshLayout.autoRefresh();
+        //item 点击测试
+        mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
+                View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
+                RefreshLayout refreshLayout = dialogView.findViewById(R.id.refreshLayout);
+                RecyclerView recyclerView = new RecyclerView(getBaseContext());
+                recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                recyclerView.setAdapter(mAdapter);
+                refreshLayout.setEnableRefresh(false);
+                refreshLayout.setEnableNestedScroll(false);
+                refreshLayout.setRefreshContent(recyclerView);
+                dialog.setContentView(dialogView);
+                dialog.show();
+            }
+        });
 
+        //点击测试
+        RefreshFooter footer = refreshLayout.getRefreshFooter();
+        if (footer != null) {
+            refreshLayout.getRefreshFooter().getView().findViewById(ClassicsFooter.ID_TEXT_TITLE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(), "点击测试", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private Collection<Void> initData() {

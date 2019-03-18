@@ -13,10 +13,9 @@ import android.widget.Toast;
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.OnTwoLevelListener;
-import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.scwang.smartrefresh.layout.header.TwoLevelHeader;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 /**
@@ -36,8 +35,8 @@ public class SecondFloorPracticeFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         final View floor = root.findViewById(R.id.secondfloor);
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
-        final TwoLevelHeader header = (TwoLevelHeader)root.findViewById(R.id.header);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
+        final TwoLevelHeader header = root.findViewById(R.id.header);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +44,7 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-        final RefreshLayout refreshLayout = (RefreshLayout)root.findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = root.findViewById(R.id.refreshLayout);
         refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -64,13 +63,23 @@ public class SecondFloorPracticeFragment extends Fragment {
 //            @Override
 //            public void onHeaderPulling(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
-//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), mRefreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }
 //            @Override
 //            public void onHeaderReleasing(@NonNull RefreshHeader header, float percent, int offset, int bottomHeight, int maxDragHeight) {
 //                toolbar.setAlpha(1 - Math.min(percent, 1));
-//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), refreshLayout.getLayout().getHeight() - floor.getHeight()));
+//                floor.setTranslationY(Math.min(offset - floor.getHeight() + toolbar.getHeight(), mRefreshLayout.getLayout().getHeight() - floor.getHeight()));
 //            }
+        });
+
+        /*
+         * 主动打开二楼
+         */
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                header.openTwoLevel(true);
+            }
         });
 
         header.setOnTwoLevelListener(new OnTwoLevelListener() {
@@ -89,11 +98,11 @@ public class SecondFloorPracticeFragment extends Fragment {
             }
         });
 
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 //            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//            public void onRefresh(@NonNull RefreshLayout mRefreshLayout) {
 //                Toast.makeText(getContext(),"触发刷新事件",Toast.LENGTH_SHORT).show();
-//                refreshLayout.finishRefresh(2000);
+//                mRefreshLayout.finishRefresh(2000);
 //            }
 //        });
 

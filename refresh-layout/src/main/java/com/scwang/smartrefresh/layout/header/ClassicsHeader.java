@@ -61,6 +61,15 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     protected DateFormat mLastUpdateFormat;
     protected boolean mEnableLastTime = true;
 
+    protected String mTextPulling = null;//"下拉可以刷新";
+    protected String mTextRefreshing = null;//"正在刷新...";
+    protected String mTextLoading = null;//"正在加载...";
+    protected String mTextRelease = null;//"释放立即刷新";
+    protected String mTextFinish = null;//"刷新完成";
+    protected String mTextFailed = null;//"刷新失败";
+    protected String mTextUpdate = null;//"上次更新 M-d HH:mm";
+    protected String mTextSecondary = null;//"释放进入二楼";
+
     //<editor-fold desc="RelativeLayout">
     public ClassicsHeader(Context context) {
         this(context, null);
@@ -73,34 +82,8 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     public ClassicsHeader(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        if (REFRESH_HEADER_PULLING == null) {
-            REFRESH_HEADER_PULLING = context.getString(R.string.srl_header_pulling);
-        }
-        if (REFRESH_HEADER_REFRESHING == null) {
-            REFRESH_HEADER_REFRESHING = context.getString(R.string.srl_header_refreshing);
-        }
-        if (REFRESH_HEADER_LOADING == null) {
-            REFRESH_HEADER_LOADING = context.getString(R.string.srl_header_loading);
-        }
-        if (REFRESH_HEADER_RELEASE == null) {
-            REFRESH_HEADER_RELEASE = context.getString(R.string.srl_header_release);
-        }
-        if (REFRESH_HEADER_FINISH == null) {
-            REFRESH_HEADER_FINISH = context.getString(R.string.srl_header_finish);
-        }
-        if (REFRESH_HEADER_FAILED == null) {
-            REFRESH_HEADER_FAILED = context.getString(R.string.srl_header_failed);
-        }
-        if (REFRESH_HEADER_UPDATE == null) {
-            REFRESH_HEADER_UPDATE = context.getString(R.string.srl_header_update);
-        }
-        if (REFRESH_HEADER_SECONDARY == null) {
-            REFRESH_HEADER_SECONDARY = context.getString(R.string.srl_header_secondary);
-        }
-
         mLastUpdateText = new TextView(context);
         mLastUpdateText.setTextColor(0xff7c7c7c);
-        mLastUpdateFormat = new SimpleDateFormat(REFRESH_HEADER_UPDATE, Locale.getDefault());
 
         final View thisView = this;
         final View arrowView = mArrowView;
@@ -161,18 +144,76 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsHeader_srlPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0));
+            super.setPrimaryColor(ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0));
         }
         if (ta.hasValue(R.styleable.ClassicsHeader_srlAccentColor)) {
             setAccentColor(ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0));
         }
+
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextPulling)){
+            mTextPulling = ta.getString(R.styleable.ClassicsHeader_srlTextPulling);
+        } else if(REFRESH_HEADER_PULLING != null) {
+            mTextPulling = REFRESH_HEADER_PULLING;
+        } else {
+            mTextPulling = context.getString(R.string.srl_header_pulling);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextLoading)){
+            mTextLoading = ta.getString(R.styleable.ClassicsHeader_srlTextLoading);
+        } else if(REFRESH_HEADER_LOADING != null) {
+            mTextLoading = REFRESH_HEADER_LOADING;
+        } else {
+            mTextLoading = context.getString(R.string.srl_header_loading);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRelease)){
+            mTextRelease = ta.getString(R.styleable.ClassicsHeader_srlTextRelease);
+        } else if(REFRESH_HEADER_RELEASE != null) {
+            mTextRelease = REFRESH_HEADER_RELEASE;
+        } else {
+            mTextRelease = context.getString(R.string.srl_header_release);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFinish)){
+            mTextFinish = ta.getString(R.styleable.ClassicsHeader_srlTextFinish);
+        } else if(REFRESH_HEADER_FINISH != null) {
+            mTextFinish = REFRESH_HEADER_FINISH;
+        } else {
+            mTextFinish = context.getString(R.string.srl_header_finish);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextFailed)){
+            mTextFailed = ta.getString(R.styleable.ClassicsHeader_srlTextFailed);
+        } else if(REFRESH_HEADER_FAILED != null) {
+            mTextFailed = REFRESH_HEADER_FAILED;
+        } else {
+            mTextFailed = context.getString(R.string.srl_header_failed);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextSecondary)){
+            mTextSecondary = ta.getString(R.styleable.ClassicsHeader_srlTextSecondary);
+        } else if(REFRESH_HEADER_SECONDARY != null) {
+            mTextSecondary = REFRESH_HEADER_SECONDARY;
+        } else {
+            mTextSecondary = context.getString(R.string.srl_header_secondary);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextRefreshing)){
+            mTextRefreshing = ta.getString(R.styleable.ClassicsHeader_srlTextRefreshing);
+        } else if(REFRESH_HEADER_REFRESHING != null) {
+            mTextRefreshing = REFRESH_HEADER_REFRESHING;
+        } else {
+            mTextRefreshing = context.getString(R.string.srl_header_refreshing);
+        }
+        if(ta.hasValue(R.styleable.ClassicsHeader_srlTextUpdate)){
+            mTextUpdate = ta.getString(R.styleable.ClassicsHeader_srlTextUpdate);
+        } else if(REFRESH_HEADER_UPDATE != null) {
+            mTextUpdate = REFRESH_HEADER_UPDATE;
+        } else {
+            mTextUpdate = context.getString(R.string.srl_header_update);
+        }
+        mLastUpdateFormat = new SimpleDateFormat(mTextUpdate, Locale.getDefault());
 
         ta.recycle();
 
         updateView.setId(ID_TEXT_UPDATE);
         updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
         centerLayout.addView(updateView, lpUpdateText);
-        mTitleText.setText(thisView.isInEditMode() ? REFRESH_HEADER_REFRESHING : REFRESH_HEADER_PULLING);
+        mTitleText.setText(thisView.isInEditMode() ? mTextRefreshing : mTextPulling);
 
         try {//try 不能删除-否则会出现兼容性问题
             if (context instanceof FragmentActivity) {
@@ -208,12 +249,12 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (success) {
-            mTitleText.setText(REFRESH_HEADER_FINISH);
+            mTitleText.setText(mTextFinish);
             if (mLastTime != null) {
                 setLastUpdateTime(new Date());
             }
         } else {
-            mTitleText.setText(REFRESH_HEADER_FAILED);
+            mTitleText.setText(mTextFailed);
         }
         return super.onFinish(layout, success);//延迟500毫秒之后再弹回
     }
@@ -226,27 +267,27 @@ public class ClassicsHeader extends InternalClassics<ClassicsHeader> implements 
             case None:
                 updateView.setVisibility(mEnableLastTime ? VISIBLE : GONE);
             case PullDownToRefresh:
-                mTitleText.setText(REFRESH_HEADER_PULLING);
+                mTitleText.setText(mTextPulling);
                 arrowView.setVisibility(VISIBLE);
                 arrowView.animate().rotation(0);
                 break;
             case Refreshing:
             case RefreshReleased:
-                mTitleText.setText(REFRESH_HEADER_REFRESHING);
+                mTitleText.setText(mTextRefreshing);
                 arrowView.setVisibility(GONE);
                 break;
             case ReleaseToRefresh:
-                mTitleText.setText(REFRESH_HEADER_RELEASE);
+                mTitleText.setText(mTextRelease);
                 arrowView.animate().rotation(180);
                 break;
             case ReleaseToTwoLevel:
-                mTitleText.setText(REFRESH_HEADER_SECONDARY);
+                mTitleText.setText(mTextSecondary);
                 arrowView.animate().rotation(0);
                 break;
             case Loading:
                 arrowView.setVisibility(GONE);
                 updateView.setVisibility(mEnableLastTime ? INVISIBLE : GONE);
-                mTitleText.setText(REFRESH_HEADER_LOADING);
+                mTitleText.setText(mTextLoading);
                 break;
         }
     }

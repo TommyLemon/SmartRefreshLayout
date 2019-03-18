@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
@@ -16,7 +17,11 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
 public class NestedLayoutExampleActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -34,7 +39,7 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_region);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,12 +61,25 @@ public class NestedLayoutExampleActivity extends AppCompatActivity implements Ad
                     holder.text(android.R.id.text1, model);
                 }
             }.setOnItemClickListener(this));
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss SSS", Locale.CHINA);
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    Log.e("recyclerView", dateFormat.format(new Date()) + " - onScrollStateChanged - " + newState);
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
         }
-        /**
+        /*
          * 以下代码仅仅为了演示效果而已，不是必须的
          * 关键代码在 activity_example_assign_xml 中
          */
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         if (isFirstEnter && refreshLayout != null) {
             isFirstEnter = false;
             //触发上拉加载

@@ -31,6 +31,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static android.R.layout.simple_list_item_2;
@@ -48,6 +49,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
     private RecyclerView mRecyclerView;
     private RefreshLayout mRefreshLayout;
     private static boolean mIsNeedDemo = true;
+    private BaseRecyclerAdapter<Item> mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
     public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        final Toolbar toolbar = (Toolbar)root.findViewById(R.id.toolbar);
+        final Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,21 +68,29 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
             }
         });
 
-        mRefreshLayout = (RefreshLayout) root.findViewById(refreshLayout);
+        mRefreshLayout = root.findViewById(refreshLayout);
         mRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()).setSpinnerStyle(SpinnerStyle.FixedBehind).setPrimaryColorId(R.color.colorPrimary).setAccentColorId(android.R.color.white));
         mRefreshLayout.setOnRefreshListener(this);
 
-        mRecyclerView = (RecyclerView) root.findViewById(recyclerView);
+        mRecyclerView = root.findViewById(recyclerView);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
+        mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Item>(new ArrayList<Item>(), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
+            @Override
+            protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
+                holder.text(android.R.id.text1, model.name());
+                holder.text(android.R.id.text2, model.name);
+                holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
+            }
+        });
 
         mEmptyLayout = root.findViewById(R.id.empty);
 
-        ImageView image = (ImageView) root.findViewById(R.id.empty_image);
+        ImageView image = root.findViewById(R.id.empty_image);
         image.setImageResource(R.drawable.ic_empty);
 
-        TextView empty = (TextView) root.findViewById(R.id.empty_text);
+        TextView empty = root.findViewById(R.id.empty_text);
         empty.setText("暂无数据下拉刷新");
 
         /*主动演示刷新*/
@@ -98,6 +108,10 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
                 public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                     mIsNeedDemo = false;
                 }
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    refreshLayout.finishLoadMore(2000);
+                }
             });
         }
     }
@@ -107,14 +121,7 @@ public class EmptyLayoutExampleFragmentInner extends Fragment implements Adapter
         mRefreshLayout.getLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2,EmptyLayoutExampleFragmentInner.this) {
-                    @Override
-                    protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                        holder.text(android.R.id.text1, model.name());
-                        holder.text(android.R.id.text2, model.name);
-                        holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
-                    }
-                });
+                mAdapter.refresh(Arrays.asList(Item.values()));
                 mRefreshLayout.finishRefresh();
                 mEmptyLayout.setVisibility(View.GONE);
             }

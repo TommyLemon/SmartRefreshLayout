@@ -43,7 +43,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_banner);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,8 +51,8 @@ public class BannerPracticeActivity extends AppCompatActivity {
             }
         });
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
 
         mAdapter = new QuickAdapter();
         recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
@@ -85,7 +85,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
 
 
         //添加Header
-        View header = LayoutInflater.from(this).inflate(R.layout.listitem_movie_header, recyclerView, false);
+        View header = LayoutInflater.from(this).inflate(R.layout.item_movie_header, recyclerView, false);
         Banner banner = (Banner) header;
         banner.setImageLoader(new GlideImageLoader());
         banner.setImages(BANNER_ITEMS);
@@ -103,7 +103,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
 
     public class QuickAdapter extends BaseQuickAdapter<Movie, BaseViewHolder> {
         public QuickAdapter() {
-            super(R.layout.listitem_movie_item);
+            super(R.layout.item_movie_item);
         }
 
         @Override

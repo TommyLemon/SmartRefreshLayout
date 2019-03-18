@@ -10,7 +10,6 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
  * 为功能复杂的 Header 或者 Footer 开放的接口
  * Created by SCWANG on 2017/5/26.
  */
-
 @SuppressWarnings({"unused", "UnusedReturnValue", "SameParameterValue"})
 public interface RefreshKernel {
 
@@ -59,68 +58,31 @@ public interface RefreshKernel {
 
     /**
      * 指定在下拉时候为 Header 或 Footer 绘制背景
-     *
+     * @param internal Header Footer 调用时传 this
      * @param backgroundColor 背景颜色
      * @return RefreshKernel
      */
-    RefreshKernel requestDrawBackgroundFor(RefreshInternal internal, int backgroundColor);
-//    /**
-//     * 指定在下拉时候为 Header 绘制背景
-//     * @param backgroundColor 背景颜色
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestDrawBackgroundForHeader(int backgroundColor);
-//    /**
-//     * 指定在下拉时候为 Footer 绘制背景
-//     * @param backgroundColor 背景颜色
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestDrawBackgroundForFooter(int backgroundColor);
+    RefreshKernel requestDrawBackgroundFor(@NonNull RefreshInternal internal, int backgroundColor);
     /**
      * 请求事件
+     * @param internal Header Footer 调用时传 this
      * @param request 请求
      * @return RefreshKernel
      */
     RefreshKernel requestNeedTouchEventFor(@NonNull RefreshInternal internal, boolean request);
-//    /**
-//     * 请求事件
-//     * @param request 请求
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestNeedTouchEventWhenRefreshing(boolean request);
-//    /**
-//     * 请求事件
-//     * @param request 请求
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestNeedTouchEventWhenLoading(boolean request);
     /**
      * 请求设置默认内容滚动设置
+     * @param internal Header Footer 调用时传 this
      * @param translation 移动
      * @return RefreshKernel
      */
     RefreshKernel requestDefaultTranslationContentFor(@NonNull RefreshInternal internal, boolean translation);
-//    /**
-//     * 请求设置默认内容滚动设置
-//     * @param translation 移动
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestDefaultHeaderTranslationContent(boolean translation);
     /**
      * 请求重新测量 headerHeight 或 footerHeight , 要求 height 高度为 WRAP_CONTENT
+     * @param internal Header Footer 调用时传 this
      * @return RefreshKernel
      */
     RefreshKernel requestRemeasureHeightFor(@NonNull RefreshInternal internal);
-//    /**
-//     * 请求重新测量 headerHeight , 要求 header 高度为 WRAP_CONTENT
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestRemeasureHeightForHeader();
-//    /**
-//     * 请求重新测量 footerHeight , 要求 footer 高度为 WRAP_CONTENT
-//     * @return RefreshKernel
-//     */
-//    RefreshKernel requestRemeasureHeightForFooter();
     /**
      * 设置二楼回弹时长
      * @param duration 二楼回弹时长

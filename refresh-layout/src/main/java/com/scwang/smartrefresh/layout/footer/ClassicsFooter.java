@@ -34,6 +34,14 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public static String REFRESH_FOOTER_FAILED = null;//"加载失败";
     public static String REFRESH_FOOTER_NOTHING = null;//"没有更多数据了";
 
+    protected String mTextPulling = null;//"上拉加载更多";
+    protected String mTextRelease = null;//"释放立即加载";
+    protected String mTextLoading = null;//"正在加载...";
+    protected String mTextRefreshing = null;//"正在刷新...";
+    protected String mTextFinish = null;//"加载完成";
+    protected String mTextFailed = null;//"加载失败";
+    protected String mTextNothing = null;//"没有更多数据了";
+
     protected boolean mNoMoreData = false;
 
     //<editor-fold desc="LinearLayout">
@@ -48,41 +56,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     public ClassicsFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        if (REFRESH_FOOTER_PULLING == null) {
-            REFRESH_FOOTER_PULLING = context.getString(R.string.srl_footer_pulling);
-        }
-
-        if (REFRESH_FOOTER_RELEASE == null) {
-            REFRESH_FOOTER_RELEASE = context.getString(R.string.srl_footer_release);
-        }
-
-        if (REFRESH_FOOTER_LOADING == null) {
-            REFRESH_FOOTER_LOADING = context.getString(R.string.srl_footer_loading);
-        }
-
-        if (REFRESH_FOOTER_REFRESHING == null) {
-            REFRESH_FOOTER_REFRESHING = context.getString(R.string.srl_footer_refreshing);
-        }
-
-        if (REFRESH_FOOTER_FINISH == null) {
-            REFRESH_FOOTER_FINISH = context.getString(R.string.srl_footer_finish);
-        }
-
-        if (REFRESH_FOOTER_FAILED == null) {
-            REFRESH_FOOTER_FAILED = context.getString(R.string.srl_footer_failed);
-        }
-
-        if (REFRESH_FOOTER_NOTHING == null) {
-            REFRESH_FOOTER_NOTHING = context.getString(R.string.srl_footer_nothing);
-        }
-
         final View thisView = this;
         final View arrowView = mArrowView;
         final View progressView = mProgressView;
         final DensityUtil density = new DensityUtil();
-
-        mTitleText.setTextColor(0xff666666);
-        mTitleText.setText(thisView.isInEditMode() ? REFRESH_FOOTER_LOADING : REFRESH_FOOTER_PULLING);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -127,14 +104,66 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
         }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
-            setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
+            super.setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
         }
         if (ta.hasValue(R.styleable.ClassicsFooter_srlAccentColor)) {
-            setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
+            super.setAccentColor(ta.getColor(R.styleable.ClassicsFooter_srlAccentColor, 0));
+        }
+
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextPulling)){
+            mTextPulling = ta.getString(R.styleable.ClassicsFooter_srlTextPulling);
+        } else if(REFRESH_FOOTER_PULLING != null) {
+            mTextPulling = REFRESH_FOOTER_PULLING;
+        } else {
+            mTextPulling = context.getString(R.string.srl_footer_pulling);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextRelease)){
+            mTextRelease = ta.getString(R.styleable.ClassicsFooter_srlTextRelease);
+        } else if(REFRESH_FOOTER_RELEASE != null) {
+            mTextRelease = REFRESH_FOOTER_RELEASE;
+        } else {
+            mTextRelease = context.getString(R.string.srl_footer_release);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextLoading)){
+            mTextLoading = ta.getString(R.styleable.ClassicsFooter_srlTextLoading);
+        } else if(REFRESH_FOOTER_LOADING != null) {
+            mTextLoading = REFRESH_FOOTER_LOADING;
+        } else {
+            mTextLoading = context.getString(R.string.srl_footer_loading);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextRefreshing)){
+            mTextRefreshing = ta.getString(R.styleable.ClassicsFooter_srlTextRefreshing);
+        } else if(REFRESH_FOOTER_REFRESHING != null) {
+            mTextRefreshing = REFRESH_FOOTER_REFRESHING;
+        } else {
+            mTextRefreshing = context.getString(R.string.srl_footer_refreshing);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextFinish)){
+            mTextFinish = ta.getString(R.styleable.ClassicsFooter_srlTextFinish);
+        } else if(REFRESH_FOOTER_FINISH != null) {
+            mTextFinish = REFRESH_FOOTER_FINISH;
+        } else {
+            mTextFinish = context.getString(R.string.srl_footer_finish);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextFailed)){
+            mTextFailed = ta.getString(R.styleable.ClassicsFooter_srlTextFailed);
+        } else if(REFRESH_FOOTER_FAILED != null) {
+            mTextFailed = REFRESH_FOOTER_FAILED;
+        } else {
+            mTextFailed = context.getString(R.string.srl_footer_failed);
+        }
+        if(ta.hasValue(R.styleable.ClassicsFooter_srlTextNothing)){
+            mTextNothing = ta.getString(R.styleable.ClassicsFooter_srlTextNothing);
+        } else if(REFRESH_FOOTER_NOTHING != null) {
+            mTextNothing = REFRESH_FOOTER_NOTHING;
+        } else {
+            mTextNothing = context.getString(R.string.srl_footer_nothing);
         }
 
         ta.recycle();
 
+        mTitleText.setTextColor(0xff666666);
+        mTitleText.setText(thisView.isInEditMode() ? mTextLoading : mTextPulling);
     }
 
 //    @Override
@@ -156,7 +185,7 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
     @Override
     public int onFinish(@NonNull RefreshLayout layout, boolean success) {
         if (!mNoMoreData) {
-            mTitleText.setText(success ? REFRESH_FOOTER_FINISH : REFRESH_FOOTER_FAILED);
+            mTitleText.setText(success ? mTextFinish : mTextFailed);
             return super.onFinish(layout, success);
         }
         return 0;
@@ -181,10 +210,10 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
             mNoMoreData = noMoreData;
             final View arrowView = mArrowView;
             if (noMoreData) {
-                mTitleText.setText(REFRESH_FOOTER_NOTHING);
+                mTitleText.setText(mTextNothing);
                 arrowView.setVisibility(GONE);
             } else {
-                mTitleText.setText(REFRESH_FOOTER_PULLING);
+                mTitleText.setText(mTextPulling);
                 arrowView.setVisibility(VISIBLE);
             }
         }
@@ -199,20 +228,20 @@ public class ClassicsFooter extends InternalClassics<ClassicsFooter> implements 
                 case None:
                     arrowView.setVisibility(VISIBLE);
                 case PullUpToLoad:
-                    mTitleText.setText(REFRESH_FOOTER_PULLING);
+                    mTitleText.setText(mTextPulling);
                     arrowView.animate().rotation(180);
                     break;
                 case Loading:
                 case LoadReleased:
                     arrowView.setVisibility(GONE);
-                    mTitleText.setText(REFRESH_FOOTER_LOADING);
+                    mTitleText.setText(mTextLoading);
                     break;
                 case ReleaseToLoad:
-                    mTitleText.setText(REFRESH_FOOTER_RELEASE);
+                    mTitleText.setText(mTextRelease);
                     arrowView.animate().rotation(0);
                     break;
                 case Refreshing:
-                    mTitleText.setText(REFRESH_FOOTER_REFRESHING);
+                    mTitleText.setText(mTextRefreshing);
                     arrowView.setVisibility(GONE);
                     break;
             }

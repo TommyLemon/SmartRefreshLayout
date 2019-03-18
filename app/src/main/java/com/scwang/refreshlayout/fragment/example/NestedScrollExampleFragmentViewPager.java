@@ -23,7 +23,6 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
@@ -46,7 +45,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
     public void onViewCreated(@NonNull final View root, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar);
+        Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,13 +53,13 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
             }
         });
 
-        ViewPager viewPager = (ViewPager) root.findViewById(R.id.viewPager);
+        ViewPager viewPager = root.findViewById(R.id.viewPager);
         viewPager.setAdapter(new SmartPagerAdapter());
 
         /*
          * 监听 AppBarLayout 的关闭和开启 ActionButton 设置关闭隐藏动画
          */
-        AppBarLayout appBarLayout = (AppBarLayout) root.findViewById(R.id.appbar);
+        AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
             View fab = root.findViewById(R.id.fab);
@@ -144,7 +143,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
                 public void run() {
                     mAdapter.refresh(initData());
                     refreshLayout.finishRefresh();
-                    refreshLayout.setNoMoreData(false);
+                    refreshLayout.resetNoMoreData();//setNoMoreData(false);
                 }
             }, 2000);
         }
